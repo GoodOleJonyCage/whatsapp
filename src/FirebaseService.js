@@ -22,28 +22,35 @@ firebase.initializeApp({
     measurementId: "G-D071M9NBN9"
 });
 
+const auth = firebase.auth();
+
+export const SignInGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+    
+}
+
+export const SignOutGoogle = () => {
+    return auth.signOut();
+}
+
+export const UserSignedIn = () => {
+    return auth.currentUser;
+}
 
 export const FirebaseService = (props) => {
 
-    const auth = firebase.auth();
     const firestore = firebase.firestore();
     const [user] = useAuthState(auth);
-
-    const  UserSignedIn = () =>  {
-        return auth.currentUser;
-    }
-
+    const userid = 1;
+    
     const SignInGoogle = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider);
-        console.log('sign in');
+        props.UserSignedIn(auth.currentUser);
     }
 
-    const SignOutGoogle = () => {
-        console.log('sign out');
-        return auth.signOut();
-    }
-
+   
     const LoadChatLog = () => {
         var tmpmessages = [];
         const db = firebase.firestore();
@@ -51,34 +58,36 @@ export const FirebaseService = (props) => {
             .get()
             .then(snap => {
                 snap.forEach(doc => {
-                    tmpmessages.push(doc.data().text);
+                    if (doc.data().From == userid) {
+                        tmpmessages.push(doc.data().text);
+                    }
                 });
                 props.LoadChatMessages(tmpmessages);
             });
     }
 
-    const AddChat = () => {
-        // for (var i = 0; i < 10; i++) {
-        //     db.collection("messages").add({
-        //         text: "Anbu Selvan",
-        //         photoURL: "anbu.selvan@email.com",
-        //     })
-        // }
-    }
+    // const AddChat = () => {
+    //     // for (var i = 0; i < 10; i++) {
+    //     //     db.collection("messages").add({
+    //     //         text: "Anbu Selvan",
+    //     //         photoURL: "anbu.selvan@email.com",
+    //     //     })
+    //     // }
+    // }
 
     LoadChatLog();
     return null;
-        //<Chat GetChatLog={GetChatLog} />
-        // user ?
-        //     // <SignOutGoogle.js?></SignOutGoogle.js>
-        //     <Chat
-        //         GetChatLog={GetChatLog} /> :
-        //     <SignIn
-        //         user={user}
-        //         UserSignedIn={UserSignedIn}
-        //         SignInGoogle={SignInGoogle}
-        //         SignOutGoogle={SignOutGoogle}
-        //     />
-    
-}
+    //<Chat GetChatLog={GetChatLog} />
+    // user ?
+    //     // <SignOutGoogle.js?></SignOutGoogle.js>
+    //     <Chat
+    //         GetChatLog={GetChatLog} /> :
+    //     <SignIn
+    //         user={user}
+    //         UserSignedIn={UserSignedIn}
+    //         SignInGoogle={SignInGoogle}
+    //         SignOutGoogle={SignOutGoogle}
+    //     />
 
+}
+ 
