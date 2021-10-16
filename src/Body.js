@@ -19,32 +19,32 @@ export const Body = () => {
 
     useEffect(() => {
             
-        fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
+        // fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
+        //         method: "GET",
+        //         mode: "cors",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
                 
-                setnames(data.contents[0].map(i => i.name));
-                //console.log(names);
-            });
+        //         setnames(data.contents[0].map(i => i.name));
+        //         //console.log(names);
+        //     });
             
-            fetch("names.drycodes.com/30?nameOptions=funnyWords", {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                setnames(data.map(i => i.name));
-                //console.log(names);
-            });
+        //     fetch("names.drycodes.com/30?nameOptions=funnyWords", {
+        //         method: "GET",
+        //         mode: "cors",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setnames(data.map(i => i.name));
+        //         //console.log(names);
+        //     });
             //console.log(user.length  );
       }, []);
     
@@ -78,9 +78,9 @@ export const Body = () => {
                             <div className="messages-container-header">
                                 <div className="messages-container-header-left">
                                     <img src="https://picsum.photos/200/300?random=1"></img>
-                                    <h3>Khan Jee</h3>
+                                    <span className="top-username">Khan Jee</span>
                                 </div>
-                                <div className="bodyusers-header-left">
+                                <div className="message-header-right">
                                     <span className="material-icons">search</span>
                                     <span className="material-icons">more_vert</span>
                                     <SignIn SignInGoogle={SignInGoogle} SignOutGoogle={SignOutGoogle} UserSignedIn={UserSignedIn} />

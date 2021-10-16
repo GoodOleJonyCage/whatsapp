@@ -4,9 +4,11 @@
 .users li .username{
     font-size: 14px ;
     font-weight: bold;
+    text-align: left;
 }
 .users li .user-last-message{
-    font-size: 9px ;
+    font-size: 8px ;
+    color:gray;
 }
 .users li .lastloggedin{
     color:dimgray;
