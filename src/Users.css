@@ -1,0 +1,16 @@
+.users{
+      
+}
+.users li .username{
+    font-size: 14px ;
+    font-weight: bold;
+}
+.users li .user-last-message{
+    font-size: 9px ;
+}
+.users li .lastloggedin{
+    color:dimgray;
+    font-size : 8px;
+}
+
+ 

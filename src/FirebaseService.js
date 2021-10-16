@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from "moment";
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -24,10 +25,20 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 
+export function getCurrentDate(separator = '') {
+
+    // let newDate = new Date()
+    // let date = newDate.getDate();
+    // let month = newDate.getMonth() + 1;
+    // let year = newDate.getFullYear();
+
+    // return `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
+    return  moment().format("DD-MM-YYYY hh:mm:ss")
+}
+
 export const SignInGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
-    
 }
 
 export const SignOutGoogle = () => {
