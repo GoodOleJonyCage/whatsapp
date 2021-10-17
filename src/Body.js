@@ -1,5 +1,5 @@
 import React, { useEffect,useState,useRef} from 'react';
-import {FirebaseService,SignInGoogle,SignOutGoogle,UserSignedIn} from './FirebaseService'
+import {LoadChatLog,AddChat,FirebaseService,SignInGoogle,SignOutGoogle,UserSignedIn} from './FirebaseService'
 import {Users} from './Users'
 import {SignIn} from './SignIn'
 import {Textarea} from './Textarea'
@@ -12,50 +12,46 @@ export const Body = () => {
     const[names,setnames]    = useState([]);
     const[phrases,setphrases]= useState([]);
     const[chat,setchat]      = useState([]);
-
-    function ParentLoadChatMessages(val){
-        setchat(val);
-    }
+    const[signedin,setsignedin]      = useState(false);
 
     useEffect(() => {
-            
-        // fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
-        //         method: "GET",
-        //         mode: "cors",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
+        fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
                 
-        //         setnames(data.contents[0].map(i => i.name));
-        //         //console.log(names);
-        //     });
+                setnames(data.contents[0].map(i => i.name));
+                //console.log(names);
+            });
             
-        //     fetch("names.drycodes.com/30?nameOptions=funnyWords", {
-        //         method: "GET",
-        //         mode: "cors",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setnames(data.map(i => i.name));
-        //         //console.log(names);
-        //     });
-            //console.log(user.length  );
+            fetch("names.drycodes.com/30?nameOptions=funnyWords", {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                setnames(data.map(i => i.name));
+                //console.log(names);
+            });
+        
+            LoadChatLog(setchat);
       }, []);
     
       return (
         <div>
-            <FirebaseService 
-                LoadChatMessages={ParentLoadChatMessages}/>
+            <FirebaseService />
                 {
                     !UserSignedIn()  ? 
                     <div>
-                        <button onClick={() => { SignInGoogle();}}>Sign In</button> 
+                        <button onClick={() => {SignInGoogle()}}>Sign In</button> 
                         <SignIn SignInGoogle={SignInGoogle} SignOutGoogle={SignOutGoogle} UserSignedIn={UserSignedIn} />
                     </div> :
                     <div className="body">
@@ -91,7 +87,7 @@ export const Body = () => {
                                 <span className="material-icons">sentiment_satisfied_alt</span>
                                 <span className="material-icons">attach_file</span>
                                 <input type="text" ></input>
-                                <span className="material-icons">mic</span>
+                                <span className="material-icons" onClick={()=>{AddChat(setchat)}}>mic</span>
                             </div>
                         </div>
                     </div>
