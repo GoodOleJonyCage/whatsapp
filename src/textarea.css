@@ -1,11 +1,10 @@
 .chat{
    font-size: 10px; 
-   padding: 10px 10px; 
+   padding: 10px 50px; 
    height: 100%;
    border: solid 0px black;
    background-image: url('http://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-
-   height: 760px;
+   height: calc(100vh - 140px);
    overflow: auto;
 }
  .chat .message{

@@ -72,14 +72,16 @@ const randomsentenceGenerator = () => {
     return content;
 }
 
-export const AddChat = (setchat) => {
+export const AddChat = (setchat, newtextref) => {
     const db = firebase.firestore();
     db.collection("messages").add({
-        text: randomsentenceGenerator(),
+        //text: randomsentenceGenerator(),
+        text:newtextref.value,
         From: 1,
         To: 2,
         createdAt: getCurrentDate()
     });
+    newtextref.value = "";
     LoadChatLog(setchat);
 }
 

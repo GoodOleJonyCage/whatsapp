@@ -44,7 +44,9 @@ export const Body = () => {
         
             LoadChatLog(setchat);
       }, []);
-    
+      
+      const newMessageRef = useRef();
+      
       return (
         <div>
             <FirebaseService />
@@ -84,10 +86,10 @@ export const Body = () => {
                             </div>
                             <Textarea chat={chat} />
                             <div className="message-bar">
-                                <span className="material-icons">sentiment_satisfied_alt</span>
-                                <span className="material-icons">attach_file</span>
-                                <input type="text" ></input>
-                                <span className="material-icons" onClick={()=>{AddChat(setchat)}}>mic</span>
+                                <div className="material-icons">sentiment_satisfied_alt</div>
+                                <div className="material-icons">attach_file</div>
+                                <input type="text" ref={newMessageRef}></input>
+                                <div className="material-icons" onClick={()=>{AddChat(setchat,newMessageRef.current)}}>mic</div>
                             </div>
                         </div>
                     </div>
