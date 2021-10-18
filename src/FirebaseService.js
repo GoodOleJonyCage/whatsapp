@@ -22,8 +22,6 @@ firebase.initializeApp({
 });
 
 const auth = firebase.auth();
-const userid = 1;
-const username = 'maqsood.ahsan.khan@gmail.com';
 
 export function getCurrentDate(separator = '') {
 
@@ -40,16 +38,16 @@ export function getCurrentDate(separator = '') {
 export const SignInGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithRedirect(provider)
-        // .useCallback(
-        //     () => {
-        //         //this.$router.push("/home");
-        //         setsignedin('');
-        //     },
-        //     [],
-        // )
+    // .useCallback(
+    //     () => {
+    //         //this.$router.push("/home");
+    //         setsignedin('');
+    //     },
+    //     [],
+    // )
 }
 
-export const SignOutGoogle = (setsignedin) => {
+export const SignOutGoogle = () => {
     return auth.signOut()
 }
 
@@ -81,29 +79,29 @@ const randomsentenceGenerator = () => {
 }
 
 
-export const AddChat = (setchat, newtextref,email) => {
+export const AddChat = (setchat, newtextref, email, fromEmail) => {
     const db = firebase.firestore();
     db.collection("messages").add({
         //text: randomsentenceGenerator(),
         text: newtextref.value,
-        From: username,
-        To : email ,
+        From: fromEmail,
+        To: email,
         createdAt: getCurrentDate()
     });
     newtextref.value = "";
-    LoadChatLog(setchat,email);
+    LoadChatLog(setchat, email,fromEmail);
 }
 
-export const LoadChatLog = (setchat, email) => {
+export const LoadChatLog = (setchat, email, fromEmail) => {
 
-     var tmpmessages = [];
-     const db = firebase.firestore();
-     db.collection("messages")
+    var tmpmessages = [];
+    const db = firebase.firestore();
+    db.collection("messages")
         .orderBy("createdAt")
         .get()
         .then(snap => {
             snap.forEach(doc => {
-                if (doc.data().From === username && doc.data().To == email) {
+                if (doc.data().From === fromEmail && doc.data().To == email) {
                     tmpmessages.push(doc.data().text);
                 }
             });

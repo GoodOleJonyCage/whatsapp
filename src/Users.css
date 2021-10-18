@@ -19,10 +19,9 @@
     background-color: lightgray;
 }
 
-  .tmp{
-    font-size: 9px;
+.users .selected-user{
+    background-color: lightgray;
 }
-
 
 
     

@@ -1,9 +1,9 @@
-import React, { useEffect,useState,useRef} from 'react';
-import {LoadChatLog,AddChat,SignInGoogle,SignOutGoogle,UserSignedIn} from './FirebaseService'
-import {Users} from './Users'
-import {SignIn} from './SignIn'
-import {Textarea} from './Textarea'
-import {Chat} from './Chat'
+import React, { useEffect, useState, useRef } from 'react';
+import { LoadChatLog, AddChat, SignInGoogle, SignOutGoogle, UserSignedIn } from './FirebaseService'
+import { Users } from './Users'
+import { SignIn } from './SignIn'
+import { Textarea } from './Textarea'
+import { Chat } from './Chat'
 import fetch from 'cross-fetch';
 
 export const Body = () => {
@@ -12,10 +12,10 @@ export const Body = () => {
     //  const[names,setnames]    = useState([]);
     //  const[phrases,setphrases]= useState([]);
     // const[signedin,setsignedin]   = useState(false);
-    const[chat,setchat]      = useState([]);
-    const[touser,settouser]  = useState({});
+    const [chat, setchat] = useState([]);
+    const [touser, settouser] = useState({});
     const newMessageRef = useRef();
-      
+
     useEffect(() => {
         // fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
         //         method: "GET",
@@ -26,11 +26,11 @@ export const Body = () => {
         //     })
         //     .then(response => response.json())
         //     .then(data => {
-                
+
         //         setnames(data.contents[0].map(i => i.name));
         //         //console.log(names);
         //     });
-            
+
         //     fetch("names.drycodes.com/30?nameOptions=funnyWords", {
         //         method: "GET",
         //         mode: "cors",
@@ -43,17 +43,17 @@ export const Body = () => {
         //         setnames(data.map(i => i.name));
         //         //console.log(names);
         //     });
-           
-           //setchat([1]);
+
+        //setchat([1]);
         //   console.log(UserSignedIn());
         //LoadChatLog(setchat,  '');
-      }, []);
+    }, []);
 
     const assignUser = (email) => {
         settouser(email);
-        LoadChatLog(setchat,email);
+        LoadChatLog(setchat, email, UserSignedIn()?.email);
     }
-    
+
     return (
         <div className="body">
             <div className="bodyusers">
@@ -69,7 +69,7 @@ export const Body = () => {
                     <span className="material-icons">search</span>
                     <input type="text" placeholder="Search text" ></input>
                 </div>
-                <Users  assignUser={assignUser}/>
+                <Users assignUser={assignUser} />
             </div>
             <div className="messages-container">
                 <div className="messages-container-header">
@@ -88,7 +88,7 @@ export const Body = () => {
                     <div className="material-icons">sentiment_satisfied_alt</div>
                     <div className="material-icons">attach_file</div>
                     <input type="text" ref={newMessageRef}></input>
-                    <div className="material-icons" onClick={() => { AddChat(setchat, newMessageRef.current, touser) }}>mic</div>
+                    <div className="material-icons" onClick={() => { AddChat(setchat, newMessageRef.current, touser, UserSignedIn()?.email) }}>mic</div>
                 </div>
             </div>
         </div>

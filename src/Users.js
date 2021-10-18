@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import './Users.css'
 
 export const Users = (props) => {
@@ -6,17 +7,20 @@ export const Users = (props) => {
     //                { email: 'test2@gmail.com', name: 'Kim' }];
 
     const users = ['test1@gmail.com','test2@gmail.com'];
+    const[selecteduser, setselecteduser] = useState({});
     
     return <ul className="users">
         {
             users.map((user, i) => {
-                return <li key={user} onClick={() => {props.assignUser(user)}} >
+                return <li 
+                className={selecteduser == user ? 'selected-user' : ''}
+                key={user} onClick={() => {props.assignUser(user);setselecteduser(user);}} >
                     <div className="userpic">
                         <img src={"https://picsum.photos/200/300?random=" + i}></img>
                         <div>
                             <div className="username">
                                 {/* {props.names[i] == null ? "No Name" : props.names[i]} */}
-                                No Name
+                                {user}
                             </div>
                             <div className="user-last-message">
                                 {/* {props.phrases[i] == null ? 'Last seen 10 mins ago' : props.phrases[i]} */}

@@ -16,9 +16,9 @@ function App() {
   firebase.auth().onAuthStateChanged((user, context) => {
     if (UserSignedIn()) {
       setauthenticated(true);
-      console.log('A');
+      
     } else {
-      console.log('B');
+      
       setauthenticated(false);
     }
   });
