@@ -47,6 +47,7 @@ export const Body = () => {
         //setchat([1]);
         //   console.log(UserSignedIn());
         //LoadChatLog(setchat,  '');
+      //  LoadChatLog(setchat, touser, UserSignedIn()?.email);
     }, []);
 
     const assignUser = (email) => {
@@ -58,7 +59,9 @@ export const Body = () => {
         <div className="body">
             <div className="bodyusers">
                 <div className="bodyusers-header">
-                    <span className="material-icons account-icon">account_circle</span>
+                    <div className="bodyusers-header-account-area">
+                        <span className="material-icons account-icon">account_circle</span>
+                    </div>
                     <div className="bodyusers-header-left">
                         <span className="material-icons">loop</span>
                         <span className="material-icons">chat</span>
@@ -75,7 +78,7 @@ export const Body = () => {
                 <div className="messages-container-header">
                     <div className="messages-container-header-left">
                         <img src="https://picsum.photos/200/300?random=1"></img>
-                        <span className="top-username">Khan Jee</span>
+                        <span className="top-username">{UserSignedIn()?.email}</span>
                     </div>
                     <div className="message-header-right">
                         <span className="material-icons">search</span>

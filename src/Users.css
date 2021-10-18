@@ -9,6 +9,7 @@
 .users li .user-last-message{
     font-size: 8px ;
     color:gray;
+    text-align: left;
 }
 .users li .lastloggedin{
     color:dimgray;
@@ -22,7 +23,7 @@
 .users .selected-user{
     background-color: lightgray;
 }
-
+ 
 
     
 

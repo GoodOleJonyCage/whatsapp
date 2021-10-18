@@ -3,9 +3,10 @@ import moment from "moment";
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
+import {  onSnapshot } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import {  setDoc, Timestamp } from "firebase/firestore";
 import { Chat } from './Chat'
 import { SignIn } from './SignIn'
 import { Route } from 'react-router-dom'
@@ -20,6 +21,7 @@ firebase.initializeApp({
     appId: "1:500011062804:web:12621420c608687efc7901",
     measurementId: "G-D071M9NBN9"
 });
+
 
 const auth = firebase.auth();
 
@@ -101,10 +103,27 @@ export const LoadChatLog = (setchat, email, fromEmail) => {
         .get()
         .then(snap => {
             snap.forEach(doc => {
-                if (doc.data().From === fromEmail && doc.data().To == email) {
-                    tmpmessages.push(doc.data().text);
+                if ( 
+                     doc.data().From === fromEmail && doc.data().To == email  ||
+                     doc.data().From === email     && doc.data().To == fromEmail 
+                    ) {
+                    tmpmessages.push(
+                    {
+                        text     : doc.data().text,
+                        leftside : doc.data().from == fromEmail && doc.data().To == email
+                                ? true : doc.data().From === email && doc.data().To == fromEmail
+                    });
                 }
             });
             setchat(tmpmessages);
         });
 }
+
+// const db = firebase.firestore();
+// db.collection("messages")//.where("state", "==", "CA")
+//     .onSnapshot((snapshot) => {
+//         snapshot.docChanges().forEach((change) => {
+//             console.log(change.doc.data());
+//             //LoadChatLog(null,change.doc.data().to, change.doc.data().from)
+//         });
+//     });

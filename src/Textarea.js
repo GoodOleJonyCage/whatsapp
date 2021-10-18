@@ -16,8 +16,8 @@ export const Textarea = (props) => {
     return <div className="chat" >
         {
             props.chat.map(msg => {
-                return <div className="message">
-                    <div className="messagetext">{msg}</div>
+                return <div className={(msg.leftside?"message-right":"") + " message"}>
+                    <div className="messagetext">{msg.text}</div>
                     <div className="date">{getCurrentDate()}</div>
                 </div>
             })

@@ -19,6 +19,10 @@
     width: 60%;
     font-weight: bold;
  }
+ .chat .message-right{
+   margin: 10px 40%;
+
+}
  .chat .messagetext{
      text-align: left;
  }
