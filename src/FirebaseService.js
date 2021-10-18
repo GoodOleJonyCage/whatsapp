@@ -8,7 +8,8 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { Chat } from './Chat'
 import { SignIn } from './SignIn'
-//import { useHistory } from "react-router-dom";
+import { Route } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 firebase.initializeApp({
     apiKey: "AIzaSyApDwYPGL0THwlnBG58SURoRjegw1mCx94",
@@ -22,6 +23,7 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const userid = 1;
+const username = 'maqsood.ahsan.khan@gmail.com';
 
 export function getCurrentDate(separator = '') {
 
@@ -34,15 +36,21 @@ export function getCurrentDate(separator = '') {
     return moment().format("DD-MM-YYYY hh:mm:ss")
 }
 
+
 export const SignInGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithRedirect (provider);
+    auth.signInWithRedirect(provider)
+        // .useCallback(
+        //     () => {
+        //         //this.$router.push("/home");
+        //         setsignedin('');
+        //     },
+        //     [],
+        // )
 }
 
-export const SignOutGoogle = () => {
-    // const history = useHistory();
-    // history.push("/login");
-    return auth.signOut(); 
+export const SignOutGoogle = (setsignedin) => {
+    return auth.signOut()
 }
 
 export const UserSignedIn = () => {
@@ -72,58 +80,33 @@ const randomsentenceGenerator = () => {
     return content;
 }
 
-export const AddChat = (setchat, newtextref) => {
+
+export const AddChat = (setchat, newtextref,email) => {
     const db = firebase.firestore();
     db.collection("messages").add({
         //text: randomsentenceGenerator(),
-        text:newtextref.value,
-        From: 1,
-        To: 2,
+        text: newtextref.value,
+        From: username,
+        To : email ,
         createdAt: getCurrentDate()
     });
     newtextref.value = "";
-    LoadChatLog(setchat);
+    LoadChatLog(setchat,email);
 }
 
-export const LoadChatLog = (setchat) => {
-    var tmpmessages = [];
-    const db = firebase.firestore();
-    db.collection("messages")
+export const LoadChatLog = (setchat, email) => {
+
+     var tmpmessages = [];
+     const db = firebase.firestore();
+     db.collection("messages")
         .orderBy("createdAt")
         .get()
         .then(snap => {
             snap.forEach(doc => {
-                if (doc.data().From == userid) {
+                if (doc.data().From === username && doc.data().To == email) {
                     tmpmessages.push(doc.data().text);
                 }
             });
             setchat(tmpmessages);
         });
-}
-
-export const FirebaseService = (props) => {
-
-    const firestore = firebase.firestore();
-    const [user] = useAuthState(auth);
-
-    // const SignInGoogle = () => {
-    //     const provider = new firebase.auth.GoogleAuthProvider();
-    //     auth.signInWithPopup(provider);
-    //     props.UserSignedIn(auth.currentUser);
-    // }
-
-    //LoadChatLog();
-    return null;
-    //<Chat GetChatLog={GetChatLog} />
-    // user ?
-    //     // <SignOutGoogle.js?></SignOutGoogle.js>
-    //     <Chat
-    //         GetChatLog={GetChatLog} /> :
-    //     <SignIn
-    //         user={user}
-    //         UserSignedIn={UserSignedIn}
-    //         SignInGoogle={SignInGoogle}
-    //         SignOutGoogle={SignOutGoogle}
-    //     />
-
 }

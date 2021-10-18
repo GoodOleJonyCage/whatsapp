@@ -117,12 +117,14 @@
   padding: 5px 10px;
   background-color: rgb(212, 213, 215);
   z-index: 99;
+  cursor: pointer;
 }
 .body .messages-container .message-header-right {
   margin-right:10px;
 }
 .body .messages-container .message-header-right .material-icons{
   font-size:  20px;
+  cursor: pointer;
 }
 .body .messages-container .message-header-right span{
   margin-left: 15px;
@@ -165,6 +167,7 @@
 .body .bodyusers  .bodyusers-header-left .material-icons {
   font-size: 20px;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .body .bodyusers  .bodyusers-header  .account-icon {
