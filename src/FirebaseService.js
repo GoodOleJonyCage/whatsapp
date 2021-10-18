@@ -36,17 +36,9 @@ export function getCurrentDate(separator = '') {
     return moment().format("DD-MM-YYYY hh:mm:ss")
 }
 
-
 export const SignInGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithRedirect(provider)
-    // .useCallback(
-    //     () => {
-    //         //this.$router.push("/home");
-    //         setsignedin('');
-    //     },
-    //     [],
-    // )
 }
 
 export const SignOutGoogle = () => {
@@ -94,8 +86,8 @@ export const AddChat = (setchat, newtextref, email, fromEmail) => {
     LoadChatLog(setchat, email,fromEmail);
 }
 
-export const LoadChatLog = (setchat, email, fromEmail) => {
 
+export const LoadChatLog = (setchat, toemail, fromEmail) => {
     var tmpmessages = [];
     const db = firebase.firestore();
     db.collection("messages")
@@ -103,22 +95,23 @@ export const LoadChatLog = (setchat, email, fromEmail) => {
         .get()
         .then(snap => {
             snap.forEach(doc => {
-                if ( 
-                     doc.data().From === fromEmail && doc.data().To == email  ||
-                     doc.data().From === email     && doc.data().To == fromEmail 
-                    ) {
+                if (
+                    doc.data().From === fromEmail && doc.data().To === toemail ||
+                    doc.data().From === toemail && doc.data().To === fromEmail
+                ) {
                     tmpmessages.push(
-                    {
-                        text     : doc.data().text,
-                        leftside : doc.data().from == fromEmail && doc.data().To == email
-                                ? true : doc.data().From === email && doc.data().To == fromEmail
-                    });
+                        {
+                            text: doc.data().text,
+                            createdAt : doc.data().createdAt,
+                            leftside: doc.data().from === fromEmail && doc.data().To === toemail
+                                ? true : doc.data().From === toemail && doc.data().To === fromEmail
+
+                        });
                 }
             });
             setchat(tmpmessages);
         });
 }
-
 // const db = firebase.firestore();
 // db.collection("messages")//.where("state", "==", "CA")
 //     .onSnapshot((snapshot) => {

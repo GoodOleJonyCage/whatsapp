@@ -4,7 +4,10 @@ import { Users } from './Users'
 import { SignIn } from './SignIn'
 import { Textarea } from './Textarea'
 import { Chat } from './Chat'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { ConstructionOutlined } from '@mui/icons-material';
 import fetch from 'cross-fetch';
+import firebase from "firebase/app";
 
 export const Body = () => {
 
@@ -12,11 +15,35 @@ export const Body = () => {
     //  const[names,setnames]    = useState([]);
     //  const[phrases,setphrases]= useState([]);
     // const[signedin,setsignedin]   = useState(false);
+    //const [messages, setmessages] = useState([]);
     const [chat, setchat] = useState([]);
     const [touser, settouser] = useState({});
     const newMessageRef = useRef();
-
+    
+    // const db = firebase.firestore();
+    // const messagesRef = db.collection('messages')
+    //                     .orderBy("createdAt")
+    //                     .where('From', '==' , UserSignedIn()?.email)
+    //                     .where('To', '==',  touser )
+    // const [messagelist] = useCollectionData(messagesRef, {idField: 'id'}) ;
+    // console.log(messagelist);
+    
+    // let newchat = [];
+    // if (messagelist) {
+        
+    //     let newlist = messagelist.map(c => {
+    //         return {
+    //             text: c.text,
+    //             leftside: c.From === UserSignedIn()?.email && c.To === touser
+    //                 ? true : c.From === touser && c.To === UserSignedIn()?.email ? false : false
+    //         }
+    //     });
+    //     //setmessages(newlist);
+    //     console.log(newlist);
+    // }
+    
     useEffect(() => {
+        
         // fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
         //         method: "GET",
         //         mode: "cors",
@@ -86,7 +113,12 @@ export const Body = () => {
                         <SignIn SignInGoogle={SignInGoogle} SignOutGoogle={SignOutGoogle} UserSignedIn={UserSignedIn} />
                     </div>
                 </div>
-                <Textarea chat={chat} />
+                <Textarea 
+                    // messagelist={messagelist} 
+                    usersignedin={UserSignedIn()}
+                    chat={chat} 
+                    fromemail={UserSignedIn()?.email} 
+                    toemail={touser} />
                 <div className="message-bar">
                     <div className="material-icons">sentiment_satisfied_alt</div>
                     <div className="material-icons">attach_file</div>

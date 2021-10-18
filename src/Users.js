@@ -6,7 +6,7 @@ export const Users = (props) => {
     // const users = [{ email: 'test1@gmail.com', name: 'Jonny' },
     //                { email: 'test2@gmail.com', name: 'Kim' }];
 
-    const users = ['maqsood.ahsan.khan@gmail.com','whatsappdev98@gmail.com'];
+    const users = ['maqsood.ahsan.khan@gmail.com','whatsappdev98@gmail.com','sample@gmail.com'];
     const[selecteduser, setselecteduser] = useState({});
     
     return <ul className="users">
