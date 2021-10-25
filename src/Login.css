@@ -1,0 +1,35 @@
+.login-section{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh);
+}
+
+.login-section .header{
+    color:lightgray;
+    background-color: lightgray;
+    display: flex;
+    flex: .3;
+    font-weight: bold;
+    letter-spacing: 2.2px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.login-section .footer{
+    color:lightgray;
+    font-size: .5em;
+    background-color: lightgray;
+    display: flex;
+    flex: .3;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    height: 5px;
+    align-items: center;
+    justify-content: center;
+    justify-self: flex-end;
+    width: 100%;
+}

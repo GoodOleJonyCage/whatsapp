@@ -72,6 +72,13 @@ const randomsentenceGenerator = () => {
     return content;
 }
 
+ export const AddUser = (email) => {
+    const db = firebase.firestore();
+    db.collection("users").add({
+        createdAt: getCurrentDate(),
+        name : email
+    });
+}
 
 export const AddChat = (setchat, newtextref, email, fromEmail) => {
     const db = firebase.firestore();

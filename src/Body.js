@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { LoadChatLog, AddChat, SignInGoogle, SignOutGoogle, UserSignedIn } from './FirebaseService'
+import { LoadChatLog,AddUser, AddChat, SignInGoogle, SignOutGoogle, UserSignedIn } from './FirebaseService'
 import { Users } from './Users'
 import { SignIn } from './SignIn'
 import { Textarea } from './Textarea'
@@ -11,71 +11,19 @@ import firebase from "firebase/app";
 
 export const Body = () => {
 
-    //  const lst                = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-    //  const[names,setnames]    = useState([]);
-    //  const[phrases,setphrases]= useState([]);
-    // const[signedin,setsignedin]   = useState(false);
-    //const [messages, setmessages] = useState([]);
+    const [loaded, setloaded] = useState(false);
     const [chat, setchat] = useState([]);
     const [touser, settouser] = useState({});
     const newMessageRef = useRef();
-    
-    // const db = firebase.firestore();
-    // const messagesRef = db.collection('messages')
-    //                     .orderBy("createdAt")
-    //                     .where('From', '==' , UserSignedIn()?.email)
-    //                     .where('To', '==',  touser )
-    // const [messagelist] = useCollectionData(messagesRef, {idField: 'id'}) ;
-    // console.log(messagelist);
-    
-    // let newchat = [];
-    // if (messagelist) {
+    const newUserRef = useRef();
         
-    //     let newlist = messagelist.map(c => {
-    //         return {
-    //             text: c.text,
-    //             leftside: c.From === UserSignedIn()?.email && c.To === touser
-    //                 ? true : c.From === touser && c.To === UserSignedIn()?.email ? false : false
-    //         }
-    //     });
-    //     //setmessages(newlist);
-    //     console.log(newlist);
-    // }
-    
-    useEffect(() => {
-        
-        // fetch("http://api.fungenerators.com/name/categories.json?start=0&limit=40", {
-        //         method: "GET",
-        //         mode: "cors",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-
-        //         setnames(data.contents[0].map(i => i.name));
-        //         //console.log(names);
-        //     });
-
-        //     fetch("names.drycodes.com/30?nameOptions=funnyWords", {
-        //         method: "GET",
-        //         mode: "cors",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setnames(data.map(i => i.name));
-        //         //console.log(names);
-        //     });
-
-        //setchat([1]);
-        //   console.log(UserSignedIn());
-        //LoadChatLog(setchat,  '');
-      //  LoadChatLog(setchat, touser, UserSignedIn()?.email);
-    }, []);
+    let db = firebase.firestore();
+    //messages
+    let messagesRef = db.collection('messages').orderBy("createdAt")
+    const [messagelist] = useCollectionData(messagesRef, { idField: 'id' })
+    //users
+    let usersRef = db.collection('users').orderBy("createdAt")
+    const [userlist] = useCollectionData(usersRef, { idField: 'id' })
 
     const assignUser = (email) => {
         settouser(email);
@@ -96,10 +44,14 @@ export const Body = () => {
                     </div>
                 </div>
                 <div className="user-search">
-                    <span className="material-icons">search</span>
-                    <input type="text" placeholder="Search text" ></input>
+                    <span className="material-icons search-icon">search</span>
+                    <input ref={newUserRef} type="text" placeholder="Search text" ></input>
+                    <span onClick={()=>{AddUser(newUserRef.current.value);newUserRef.current.value = "";}}
+                    class="material-icons">person_add_alt</span>
                 </div>
-                <Users assignUser={assignUser} />
+                <Users 
+                userlist={userlist}
+                assignUser={assignUser} />
             </div>
             <div className="messages-container">
                 <div className="messages-container-header">
